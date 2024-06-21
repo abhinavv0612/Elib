@@ -18,5 +18,11 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.5.2",
     "typescript-eslint": "^7.13.1"
+  },
+  "overrides": {
+    "eslint": "^9.5.0"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
   }
 }
