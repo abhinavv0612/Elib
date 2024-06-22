@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 
-const createBook = async (req: Request, res: Response, next: NextFunction) => {
-    
+const createBook = async (req: Request, res: Response) => {
+  console.log("file", req.files);
   res.json({});
 };
 

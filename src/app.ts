@@ -4,6 +4,7 @@ import globalErrorHandler from './middlewares/globalErrorHandler';
 import userRouter from './user/userRouter';
 import { json } from 'stream/consumers';
 import { createBook } from './book/bookController';
+import bookRouter from './book/bookRouter';
 
 const app =express();
 
@@ -16,16 +17,13 @@ app.get('/', (req,res,next) =>{
 //    const error = createHttpError(400,"something went wrong");
 //    throw error;
     res.json({message : "Welcome to my app"})
-
 })
 app.use(express.json())
 app.use("/api/users",userRouter);//same as mounting
-app.use("/api/books",createBook);
+app.use("/api/books",bookRouter);
 
 
 //Global error handler (after all routes)
 app.use(globalErrorHandler);
-
-
 
 export default app;
