@@ -52,7 +52,7 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
     //Process
 
     //Response
-    res.json({
+    res.status(201).json({
       accessToken: token,
     });
   } catch (err) {
@@ -60,4 +60,10 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export default createUser;
+//login 
+
+const loginUser  = async (req: Request, res: Response, next: NextFunction) => {
+    res.json({message:"ok"});
+}
+
+export {createUser,loginUser};
