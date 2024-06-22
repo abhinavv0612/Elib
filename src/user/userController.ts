@@ -19,10 +19,9 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user = await userModel.findOne({ email });
     if (user) {
-    
       res.status(400).json({
-        message:"User already exist"
-      })
+        message: "User already exist",
+      });
     }
   } catch (err) {
     return next(createHttpError(500, "error while getting user"));
@@ -60,10 +59,29 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-//login 
+//login
 
-const loginUser  = async (req: Request, res: Response, next: NextFunction) => {
-    res.json({message:"ok"});
-}
+const loginUser = async (req: Request, res: Response, next: NextFunction) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    return next(createHttpError(400, "all fields required"));
+  }
+  const user = await userModel.findOne({ email: email });
+  if (!user) {
+    return next(createHttpError(404, "User not found"));
+  }
 
-export {createUser,loginUser};
+  const isMatch = await bcrypt.compare(password, user.password);
+
+  if (!isMatch) {
+    return next(createHttpError(401, "Username or password incorrect"));
+  }
+
+  //create new access token
+  const token = sign({ sub: user._id }, config.jwtSecret as string, {
+    expiresIn: "7d",
+  });
+  res.json({ accessToken: token });
+};
+
+export { createUser, loginUser };
