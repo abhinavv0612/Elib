@@ -3,6 +3,7 @@ import express,{NextFunction, Request,Response} from 'express';
 import globalErrorHandler from './middlewares/globalErrorHandler';
 import userRouter from './user/userRouter';
 import { json } from 'stream/consumers';
+import { createBook } from './book/bookController';
 
 const app =express();
 
@@ -19,7 +20,7 @@ app.get('/', (req,res,next) =>{
 })
 app.use(express.json())
 app.use("/api/users",userRouter);//same as mounting
-
+app.use("/api/books",createBook);
 
 
 //Global error handler (after all routes)
