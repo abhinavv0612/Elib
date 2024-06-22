@@ -2,6 +2,7 @@ import express,{NextFunction, Request,Response} from 'express';
 
 import globalErrorHandler from './middlewares/globalErrorHandler';
 import userRouter from './user/userRouter';
+import { json } from 'stream/consumers';
 
 const app =express();
 
@@ -16,7 +17,7 @@ app.get('/', (req,res,next) =>{
     res.json({message : "Welcome to my app"})
 
 })
-
+app.use(express.json())
 app.use("/api/users",userRouter);//same as mounting
 
 
