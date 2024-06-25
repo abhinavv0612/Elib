@@ -4,6 +4,7 @@ import path from "node:path";
 import createHttpError from "http-errors";
 import bookModel from "./bookModel";
 import fs from "node:fs"
+ 
 
 const createBook = async (req: Request, res: Response ,next : NextFunction) => {
   console.log("file", req.files);
@@ -11,7 +12,7 @@ const createBook = async (req: Request, res: Response ,next : NextFunction) => {
 
   const files = req.files as { [fieldname: string]: Express.Multer.File[] };
 
-  const coverImageMimeType = files.coverImage[0].mimetype.split("/").at(-1);
+  const coverImageMimeType = files.coverImage[0].mimetype.split("/").pop();
 
   const fileName = files.coverImage[0].filename;
 
@@ -43,7 +44,10 @@ const createBook = async (req: Request, res: Response ,next : NextFunction) => {
       }
     );
     console.log("bookfileuploadresult", bookFileUplaodResult);
-    console.log(uploadResult);
+    console.log("uploadResult" ,uploadResult);
+    //@'ts-expect-error': 'allow-with-description'
+    //@ts-ignore
+    console.log("userId",req.userId);
     res.json({});
 
     //creating book  database in mongo db
