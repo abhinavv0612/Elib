@@ -1,7 +1,7 @@
 import path from "node:path";
 
 import express from "express";
-import { createBook } from "./bookController";
+import { createBook,listBooks,updateBook} from "./bookController";
 import multer from "multer";
 import authenticate from "../middlewares/authenticate";
 
@@ -25,5 +25,15 @@ bookRouter.post(
   createBook
 ); //multer is a middleware for multipart data parsing
 //
-
+bookRouter.patch(
+  "/:bookId",
+  authenticate,
+  upload.fields([
+    { name: "coverImage", maxCount: 1 }, //we are uploading image and pdf of the book on cloudinary
+    { name: "file", maxCount: 1 },
+  ]),
+  updateBook
+); //multer is a middleware for multipart data parsing
+//
+bookRouter.get("/",listBooks)
 export default bookRouter;
