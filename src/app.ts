@@ -1,13 +1,17 @@
 import express,{NextFunction, Request,Response} from 'express';
-
+import cors from "cors";
 import globalErrorHandler from './middlewares/globalErrorHandler';
 import userRouter from './user/userRouter';
 import { json } from 'stream/consumers';
 import { createBook } from './book/bookController';
 import bookRouter from './book/bookRouter';
+import { config } from './config/config';
 
 const app =express();
 
+app.use(cors({
+    origin:config.frontendDomain,
+}));
 //Routes
 
 
